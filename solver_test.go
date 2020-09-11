@@ -37,3 +37,30 @@ func TestSolver(t *testing.T) {
 	defer m.Close()
 	t.Logf("\nModel:\n%s", m.String())
 }
+
+func TestRealSolver(t *testing.T) {
+	config := NewConfig()
+	defer config.Close()
+
+	ctx := NewContext(config)
+	defer ctx.Close()
+
+	x := ctx.Const(ctx.Symbol("x"), ctx.RealSort())
+	y := ctx.Const(ctx.Symbol("y"), ctx.RealSort())
+	ast := x.Div(y).Eq(ctx.Real(1, 1, ctx.RealSort()))
+	t.Logf("\nAST:\n%s", ast.String())
+
+	// Create the solver
+	s := ctx.NewSolver()
+	defer s.Close()
+
+	// Assert constraints
+	s.Assert(ast)
+
+	// Solve
+	result := s.Check()
+	if result != True {
+		t.Fatalf("bad: %v", result)
+	}
+
+}

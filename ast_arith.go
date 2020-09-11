@@ -64,6 +64,19 @@ func (a *AST) Sub(args ...*AST) *AST {
 	}
 }
 
+// Div creates an AST node representing division.
+//
+// All AST values must be part of the same context
+func (n1 * AST) Div(n2 *AST) *AST {
+	return &AST{
+		rawCtx: n1.rawCtx,
+		rawAST: C.Z3_mk_div(
+			n1.rawCtx,
+			n1.rawAST,
+			n2.rawAST),
+	}
+}
+
 // Lt creates a "less than" comparison.
 //
 // Maps to: Z3_mk_lt

@@ -53,6 +53,17 @@ func (c *Context) Int(v int, typ *Sort) *AST {
 	}
 }
 
+
+// Real creates a real type.
+//
+// Maps: Z3_mk_real
+func (c *Context) Real(num int, den int, typ *Sort) *AST {
+	return &AST{
+		rawCtx: c.raw,
+		rawAST: C.Z3_mk_real(c.raw, C.int(num), C.int(den)),
+	}
+}
+
 // True creates the value "true".
 //
 // Maps: Z3_mk_true

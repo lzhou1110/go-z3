@@ -24,3 +24,11 @@ func (c *Context) IntSort() *Sort {
 		rawSort: C.Z3_mk_int_sort(c.raw),
 	}
 }
+
+func (c *Context) RealSort() *Sort {
+	return &Sort{
+		rawCtx: c.raw,
+		rawSort: C.Z3_mk_real_sort(c.raw),
+	}
+
+}
